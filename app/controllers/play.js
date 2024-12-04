@@ -52,14 +52,17 @@ export default Controller.extend(AuthenticatedController, SceneUpdate, {
       let char = splitMsg[1];
       let notify = true;
       let currentUsername = this.get('currentUser.name');
+      let alts = this.model.app.alts ? this.model.app.alts.map(c => c.name) : [ currentUsername ];
       
         // For poses we can just add it to the display.  Other events require a reload.
         if (sceneId === this.get('currentScene.id')) {
           let scene = this.currentScene;
           
           notify = this.updateSceneData(scene, msg, timestamp);
-
-          if (currentUsername != char) {
+          
+          
+          // -1 is not found
+          if (alts.indexOf(char) < 0) {
             scene.set('is_unread', false);
           }
           else {
@@ -75,7 +78,9 @@ export default Controller.extend(AuthenticatedController, SceneUpdate, {
             this.get('model.scenes').forEach(s => {
                 if (s.id === sceneId) {
                   notify = this.updateSceneData(s, msg, timestamp);
-                  if (currentUsername != char) {
+                  
+                  // -1 is not found
+                  if (alts.indexOf(char) < 0) {
                     s.set('is_unread', true);
                     this.gameSocket.notify(`New activity from ${char} in one of your other scenes (${sceneId}).`);
                   }
@@ -91,13 +96,17 @@ export default Controller.extend(AuthenticatedController, SceneUpdate, {
       let channelTitle = msgData.title;
       let newMessage = msgData.message;
       let author = msgData.author;
+      let messageId = msgData.message_id;
       let localTimestamp = localTime(timestamp);
       
       let channel = this.getChannel(channelKey);
       if (!channel) {
         channel = this.addPageChannel(msgData);
       }
-      channel.messages.pushObject({message: newMessage, timestamp: localTimestamp, author: author});
+      
+      if (!channel.messages.find(m => m.id === messageId)) {
+        channel.messages.pushObject({message: newMessage, timestamp: localTimestamp, author: author, id: messageId});
+      }
       set(channel, 'last_activity', Date.now());
       if (!channel.is_hidden) {
         set(channel, 'is_recent', true);

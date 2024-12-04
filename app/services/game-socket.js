@@ -14,15 +14,15 @@ export default Service.extend(AresConfig, {
     charId: null,
     callbacks: null,
     connected: false,
-
+  
     init: function() {
       this._super(...arguments);
       this.set('callbacks', {});
     },
       
     socketUrl() {
-      var protocol = aresconfig.use_https ? 'wss' : 'ws';
-      return `${protocol}://${aresconfig.host}:${aresconfig.websocket_port}/websocket`;
+      let protocol = this.httpsEnabled ? 'wss' : 'ws';
+      return `${protocol}://${this.mushHost}:${this.websocketPort}/websocket`;
     },
     
     checkSession(charId) {
@@ -39,37 +39,41 @@ export default Service.extend(AresConfig, {
     },
     
     // Regular alert notification
-    notify(msg, timeOutSecs = 10, type = 'success') {
+    notify(msg) {
+      
+      var doc = new DOMParser().parseFromString(msg, 'text/html');
+      var cleanMsg =  doc.body.textContent || "";
+
+        if (this.browserNotification && this.get('browserNotification.permission') === "granted") {
+            try {
+              new Notification(`Activity in ${this.mushName}`, 
+                {
+                  icon: '/game/uploads/theme_images/notification.png',
+                  badge: '/game/uploads/theme_images/notification.png',
+                  body: cleanMsg,
+                  tag: this.mushName,
+                  renotify: true
+                }
+               ); 
+            }
+            catch(error) {
+                // Do nothing.  Just safeguard against missing browser notification.
+            }
+        }         
         
-        if (msg) {
-          alertify.notify(msg, type, timeOutSecs);
-        }
-             
        if (!this.windowVisible) {
             this.favicon.changeFavicon(true);
-            if (this.browserNotification && this.get('browserNotification.permission') === "granted") {
-                try {
-                  var doc = new DOMParser().parseFromString(msg, 'text/html');
-                  var cleanMsg =  doc.body.textContent || "";
-                     
-                  new Notification(`Activity in ${aresconfig.game_name}`, 
-                    {
-                      icon: '/game/uploads/theme_images/notification.png',
-                      badge: '/game/uploads/theme_images/notification.png',
-                      body: cleanMsg,
-                      tag: window.aresconfig.game_name,
-                      renotify: true
-                    }
-                   ); 
-                }
-                catch(error) {
-                    // Do nothing.  Just safeguard against missing browser notification.
-                }
-            }            
+               
         }
     },
     
     sessionStarted(charId) {
+      
+      if (this.aresconfig === null) {
+        console.log("Unable to open websocket - aresconfig is missing.");
+        return;
+      }
+      
         let socket = this.socket;
         this.set('charId', charId);
         
@@ -178,7 +182,7 @@ export default Service.extend(AresConfig, {
     
     updateNotificationBadge(count) {
       var notification_badge = $('#notificationBadge');
-      notification_badge.text(count);
+      notification_badge.text(`${count}` === '0' ? '' : count);
     },
     
     handleMessage(self, evt) {
@@ -206,7 +210,6 @@ export default Service.extend(AresConfig, {
         }
         
         if (!recipient || recipient === self.get('charId')) {
-            var formatted_msg = ansi_up.ansi_to_html(data.args.message, { use_classes: true });
             var notify = true;
             
             if (this.callbacks[notification_type]) {
@@ -224,7 +227,8 @@ export default Service.extend(AresConfig, {
             }
             
             if (notify) {
-                this.notify(formatted_msg);
+                var formatted_msg = ansi_up.ansi_to_html(data.args.message, { use_classes: true });
+              this.notify(formatted_msg);
             }
         }
         

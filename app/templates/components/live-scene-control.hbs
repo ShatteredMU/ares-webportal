@@ -25,6 +25,13 @@
       {{/each}}
     </div>
     {{/if}}
+    
+    {{#if this.scene.in_trash}}     
+    <div class="alert alert-warning scene-deletion-warning">
+      <i class="fa fa-trash"></i>
+      Marked for deletion. Download, share, or restart before it's deleted on {{this.scene.trash_date}}.
+    </div>
+    {{/if}}
 
     
     <LiveSceneContext @scene={{this.scene}} />
@@ -158,7 +165,7 @@
                    <LiveSceneTxt @scenePose={{this.scene.draftPose}} @scene={{this.scene}} />
                  {{/if}}
                  
-             <LiveSceneCustomScenepose @scenePose={{this.scene.draftPose}} @scene={{this.scene}} />
+             <LiveSceneCustomScenepose @scenePose={{this.scene.draftPose}} @scene={{this.scene}} @custom={{this.custom}} />
              </div>
                 
              <div class="scene-pose-select">
@@ -210,7 +217,7 @@
                <LiveSceneDice @scene={{this.scene}} />
                {{/if}}
             
-               <LiveSceneCustomPlay @scene={{this.scene}} @abilities={{this.abilities}} />
+               <LiveSceneCustomPlay @scene={{this.scene}} @abilities={{this.abilities}} @custom={{this.custom}} />
                  
              </DropdownMenu>
              
@@ -286,7 +293,7 @@
     </BsModalSimple>
     
     <BsModalSimple @title="Confirm Delete" @closeTitle="Cancel" @submitTitle="Confirm" @size={{null}} @fade={{true}} @open={{this.confirmDeleteScene}} @onSubmit={{action "deleteScene"}} @onHide={{action (mut this.confirmDeleteScene) false}}>
-        You're about to delete this scene. This cannot be undone.  Are you sure?
+        You're about to mark this scene for deletion. If there are poses, other participants will have a chance to download, share, or restart the scene before it is permanently deleted.  Are you sure?
     </BsModalSimple>
 
     <BsModalSimple @title="Change the Scene Location" @closeTitle="Cancel" @submitTitle="Select" @size={{null}} @fade={{true}} @open={{this.selectLocation}} @onSubmit={{action "changeLocation"}} @onHide={{action (mut this.selectLocation) false}}>
@@ -337,7 +344,7 @@
     <BsModalSimple @title="Character Card" @closeTitle="Close" @size={{null}} @fade={{true}} @open={{this.characterCard}} @onHide={{action (mut this.characterCard) false}}>
       
       {{#if this.scene.use_custom_char_cards}}
-        <CharCardCustom @char={{this.characterCardInfo}} />
+        <CharCardCustom @char={{this.characterCardInfo}} @custom={{this.custom}} />
       {{else}}
         <CharCard @char={{this.characterCardInfo}} />
       {{/if}}
