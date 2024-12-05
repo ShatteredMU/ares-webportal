@@ -1,7 +1,7 @@
   <div class="sidebar-box {{this.boxStyle}}">
     <div class="sidebar-heading">
         <h2>Looking for RP <i class="fa-solid fa-users"></i></h2>
-          <div class="looking_for_rp">
+          <div class="looking-for-rp">
             {{#each this.custom.looking_for_rp as |char_name|}}
               <LinkTo @route="char" @model={{char_name}}>{{char_name}}</LinkTo> {{#unless @last}}&middot;{{/unless}}
             {{/each}}
