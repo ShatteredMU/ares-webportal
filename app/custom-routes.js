@@ -3,6 +3,7 @@ export default function setupCustomRoutes(router) {
   // For example:
   // router.route('yourroute');
 
+  router.route('activity');
   router.route('creature', { path: '/cryptid/:id' });
   router.route('creatures', { path: '/cryptids'});
   router.route('creature-create', { path: '/cryptid/create' });
