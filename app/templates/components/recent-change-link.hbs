@@ -17,7 +17,3 @@
 {{else}}
  {{this.change.message}}
 {{/if}}
-
-<LinkTo @route="forum-topic" @models={{array (get notification.data 0) (get notification.data 1)}}>
-            <TooltipIcon @position="left" @message="View" @icon="fa fa-eye" />
-          </LinkTo>

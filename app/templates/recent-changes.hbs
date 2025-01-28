@@ -23,6 +23,10 @@
            Plot
            {{else if (eq change.type 'forum')}}
            Forum
+           {{else if (eq change.type 'motd')}}
+           MOTD
+           {{else if (eq change.type 'event')}}
+           Event
            {{else}}
            {{change.type}}
            {{/if}}
