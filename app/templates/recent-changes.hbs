@@ -1,5 +1,5 @@
 {{page-title 'Recent Changes'}}
-<h1>Recent Changes</h1>
+<h1>Recent Changes!!!</h1>
 
 <p>This list includes wiki pages and profiles.  For scenes, check the <LinkTo @route="scenes">Scenes</LinkTo> archive.</p>
 
@@ -8,7 +8,7 @@
     <tbody>
      {{#each this.model as |change|}}
      <tr>
-         <td>
+         <td> {{change.summary}}
            {{#if (eq change.type 'char')}}
            Character
            {{else if (eq change.type 'wiki')}}
