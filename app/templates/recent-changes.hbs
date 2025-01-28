@@ -31,6 +31,7 @@
          <td>
              <RecentChangeLink @change={{change}} />
              {{#if change.summary}}
+             Summary
               <a data-bs-toggle="collapse" href="#summary" class="recent-changes-summary">
                 <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
               </a>
