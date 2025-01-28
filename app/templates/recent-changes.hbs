@@ -31,12 +31,11 @@
          <td>
              <RecentChangeLink @change={{change}} />
              {{#if change.summary}}
-             Summary
               <a data-bs-toggle="collapse" href="#summary" class="recent-changes-summary-tool">
                 <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
               </a>
               <div id="summary" class="card-collapse collapse recent-changes-summary">
-                {{change.summary}}
+                <AnsiFormat @text={{change.summary}} />
               </div>
               {{/if}}
          </td>
