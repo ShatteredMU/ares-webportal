@@ -21,6 +21,8 @@
            File
            {{else if (eq change.type 'plot')}}
            Plot
+           {{else if (eq change.type 'forum')}}
+           Forum
            {{else}}
            {{change.type}}
            {{/if}}
@@ -29,7 +31,8 @@
              {{change.timestamp}}
          </td>
          <td>
-            <RecentChangeLink @change={{change}} /> {{#if change.summary}}
+            <RecentChangeLink @change={{change}} />
+            {{#if change.summary}}
               <a data-bs-toggle="collapse" href="#{{change.type}}-{{change.data.id}}" class="recent-changes-summary-tool">
                 <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
               </a>

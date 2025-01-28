@@ -12,6 +12,12 @@
  <LinkTo @route="plot" @model={{this.change.data.id}}>{{this.change.message}}</LinkTo>
  {{else if (eq this.change.type 'creature')}}
   <LinkTo @route="creature" @model={{this.change.data.id}}>{{this.change.message}}</LinkTo>
+ {{else if (eq this.change.type 'forum')}}
+  <LinkTo @route="forum-topic" @model={{this.change.data.id}}>{{this.change.message}}</LinkTo>
 {{else}}
  {{this.change.message}}
 {{/if}}
+
+<LinkTo @route="forum-topic" @models={{array (get notification.data 0) (get notification.data 1)}}>
+            <TooltipIcon @position="left" @message="View" @icon="fa fa-eye" />
+          </LinkTo>
