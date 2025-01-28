@@ -40,7 +40,7 @@
               <a data-bs-toggle="collapse" href="#{{change.type}}-{{change.data.class_id}}" class="recent-changes-summary-tool">
                 <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
               </a>
-              <div id="{{change.type}}-{{change.data.id}}" class="card-collapse collapse recent-changes-summary">
+              <div id="{{change.type}}-{{change.data.class_id}}" class="card-collapse collapse recent-changes-summary">
                 <AnsiFormat @text={{change.summary}} />
               </div>
             {{/if}}
