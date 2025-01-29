@@ -1,5 +1,7 @@
 <div class="activity-card">
   <div class="activity-card-header">
+    <i class="fa {{this.change.data.icon}}" aria-hidden="true"></i>
+
     <RecentChangeLink @change={{this.change}} />
 
     {{#if this.change.summary}}
