@@ -1,19 +1,19 @@
-{{!-- <div class="activity-card">
-  <RecentChangeLink @change={{change}} />
-  {{#if change.summary}}
-    <a data-bs-toggle="collapse" href="#{{change.type}}-{{change.data.class_id}}" class="recent-changes-summary-tool">
+<div class="activity-card">
+  <RecentChangeLink @change={{this.change}} />
+  {{#if this.change.summary}}
+    <a data-bs-toggle="collapse" href="#{{this.change.type}}-{{this.change.data.class_id}}" class="recent-activity-summary-tool">
       Details <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
     </a>
-    <div id="{{change.type}}-{{change.data.class_id}}" class="card-collapse collapse recent-changes-summary">
-      <AnsiFormat @text={{change.summary}} />
+    <div id="{{this.change.type}}-{{this.change.data.class_id}}" class="card-collapse collapse recent-activity-summary">
+      <AnsiFormat @text={{this.change.summary}} />
     </div>
   {{/if}}
-  {{#if (eq change.type 'char')}}
-    <LinkTo @route="char-source" @models={{array change.data.char_name change.data.version_id}}>(history)</LinkTo>
+  {{#if (eq this.change.type 'char')}}
+    <LinkTo @route="char-source" @models={{array this.change.data.char_name this.change.data.version_id}}>(history)</LinkTo>
   {{else if (eq change.type 'wiki')}}
-    <LinkTo @route="wiki-source" @models={{array change.data.page_name change.data.version_id}}>(history)</LinkTo>
+    <LinkTo @route="wiki-source" @models={{array this.change.data.page_name this.change.data.version_id}}>(history)</LinkTo>
   {{/if}}
   <div class="activity-card-footer">
-    Change to {{change.type}} by {{change.author}} on {{change.timestamp}}.
+    Change to {{this.change.type}} by {{this.change.author}} on {{this.change.timestamp}}.
   </div>
-</div> --}}
+</div>
