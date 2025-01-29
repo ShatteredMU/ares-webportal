@@ -1,12 +1,14 @@
 <div class="activity-card">
   <div class="activity-card-header">
-    {{#if this.change.data.icon}}
-      <i class="fa {{this.change.data.icon}}" aria-hidden="true"></i>
-    {{else}}
-      <i class="fa fa-file" aria-hidden="true"></i>
-    {{/if}}
+    <div class="activity-card-mobile-header">
+      {{#if this.change.data.icon}}
+        <i class="fa {{this.change.data.icon}}" aria-hidden="true"></i>
+      {{else}}
+        <i class="fa fa-file" aria-hidden="true"></i>
+      {{/if}}
 
-    <RecentChangeLink @change={{this.change}} />
+      <RecentChangeLink @change={{this.change}} />
+    </div>
 
     {{#if this.change.summary}}
       <a data-bs-toggle="collapse" href="#{{this.change.type}}-{{this.change.data.class_id}}" class="recent-activity-summary-tool">
@@ -19,6 +21,6 @@
   </div>
 
   <div class="activity-card-footer">
-    Change to {{this.change.type}} by {{this.change.author}} on {{this.change.timestamp}}.
+    Change to {{this.change.type}} by <LinkTo @route="char" @model={{this.change.author}}>{{this.change.author}}</LinkTo> on {{this.change.timestamp}}.
   </div>
 </div>
