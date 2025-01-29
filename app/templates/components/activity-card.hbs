@@ -1,6 +1,10 @@
 <div class="activity-card">
   <div class="activity-card-header">
-    <i class="fa {{this.change.data.icon}}" aria-hidden="true"></i>
+    {{#if this.change.data.icon}}
+      <i class="fa {{this.change.data.icon}}" aria-hidden="true"></i>
+    {{else}}
+      <i class="fa fa-file" aria-hidden="true"></i>
+    {{/if}}
 
     <RecentChangeLink @change={{this.change}} />
 
