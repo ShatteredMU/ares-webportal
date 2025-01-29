@@ -1,15 +1,15 @@
 <div class="activity-card">
   <div class="activity-card-header">
+    <RecentChangeLink @change={{this.change}} />
+
     {{#if this.change.summary}}
       <a data-bs-toggle="collapse" href="#{{this.change.type}}-{{this.change.data.class_id}}" class="recent-activity-summary-tool">
-        Details <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
+        <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
       </a>
       <div id="{{this.change.type}}-{{this.change.data.class_id}}" class="card-collapse collapse recent-activity-summary">
         <AnsiFormat @text={{this.change.summary}} />
       </div>
     {{/if}}
-
-    <RecentChangeLink @change={{this.change}} />
   </div>
 
   <div class="activity-card-footer">
