@@ -76,6 +76,9 @@
       {{#if this.model.achievements}}
           <li class="nav-item"><a data-bs-toggle="tab" class="nav-link" href="#systemachievements">Achievements</a></li>
       {{/if}}
+
+    <li class="nav-item"><a data-bs-toggle="tab" class="nav-link" href="#comps">Comps</a></li>
+
     </ul>
     
 
@@ -94,6 +97,10 @@
           <CharAchievements @achievements={{this.model.achievements}} @sceneStats={{this.model.scene_stats}}/>
       </div>
       {{/if}}
+
+      <div id="comps" class="tab-pane fade ">
+      <CharComps @char={{this.char}}  @reloadChar={{action "reloadChar"}} />
+      </div>
     </div>
 </div>
 
