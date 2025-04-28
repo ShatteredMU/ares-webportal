@@ -21,6 +21,12 @@
            File
            {{else if (eq change.type 'plot')}}
            Plot
+           {{else if (eq change.type 'forum')}}
+           Forum
+           {{else if (eq change.type 'motd')}}
+           MOTD
+           {{else if (eq change.type 'event')}}
+           Event
            {{else}}
            {{change.type}}
            {{/if}}
@@ -29,7 +35,15 @@
              {{change.timestamp}}
          </td>
          <td>
-             <RecentChangeLink @change={{change}} />
+            <RecentChangeLink @change={{change}} />
+            {{#if change.summary}}
+              <a data-bs-toggle="collapse" href="#{{change.type}}-{{change.data.class_id}}" class="recent-changes-summary-tool">
+                <TooltipIcon @position="right" @message="Expand details." @icon="fa fa-caret-square-down" />
+              </a>
+              <div id="{{change.type}}-{{change.data.class_id}}" class="card-collapse collapse recent-changes-summary">
+                <AnsiFormat @text={{change.summary}} />
+              </div>
+            {{/if}}
          </td>
          <td>
              {{change.author}}
